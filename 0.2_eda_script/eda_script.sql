@@ -47,113 +47,145 @@ select distinct "Returned"
 from public.retail_sales rs 
 
 
---dim_date
-
+--- =====================================
+-- DIM_DATE
+-- =====================================
 CREATE TABLE dim_date (
-    date_id int PRIMARY KEY,
+    date_id SERIAL PRIMARY KEY,
     purchase_date DATE,
     ship_date DATE,
     return_date DATE
 );
 
-
---dim_table
-
+-- =====================================
+-- DIM_LOCATION
+-- =====================================
 CREATE TABLE dim_location (
-    location_id int PRIMARY KEY,
+    location_id SERIAL PRIMARY KEY,
     continent VARCHAR(100),
     country VARCHAR(100),
     city VARCHAR(100)
 );
 
-
---dim_store
-
+-- =====================================
+-- DIM_STORE
+-- =====================================
 CREATE TABLE dim_store (
-    store_id int PRIMARY KEY,
-    store_code VARCHAR(50),
+    store_id SERIAL PRIMARY KEY,
+    store_bk VARCHAR(50),
     store_name VARCHAR(255),
     store_type VARCHAR(100)
 );
 
-
---dim_sales
-
+-- =====================================
+-- DIM_SALES
+-- =====================================
 CREATE TABLE dim_sales (
-    sales_id int PRIMARY KEY,
-    salesperson_department VARCHAR(100),
-    salesperson_code VARCHAR(50)
+    sales_id SERIAL PRIMARY KEY,
+    salesperson_bk VARCHAR(50),
+    salesperson_department VARCHAR(100)
 );
 
-
---dim_promotion
-
+-- =====================================
+-- DIM_PROMOTION
+-- =====================================
 CREATE TABLE dim_promotion (
-    promotion_id int PRIMARY KEY,
-    promotion_code VARCHAR(50),
+    promotion_id SERIAL PRIMARY KEY,
+    promotion_bk VARCHAR(50),
     promotion_name VARCHAR(255)
 );
 
-
---dim_product
-
+-- =====================================
+-- DIM_PRODUCT
+-- =====================================
 CREATE TABLE dim_product (
-    product_id int PRIMARY KEY,
+    product_id SERIAL PRIMARY KEY,
+    product_bk VARCHAR(50),
     product_name VARCHAR(255),
-    product_code VARCHAR(50),
     sku VARCHAR(100)
 );
 
-
---dim_category
-
+-- =====================================
+-- DIM_CATEGORY
+-- =====================================
 CREATE TABLE dim_category (
-    category_id int PRIMARY KEY,
+    category_id SERIAL PRIMARY KEY,
     category VARCHAR(100),
     subcategory VARCHAR(100),
     brand VARCHAR(100)
 );
 
-
---dim_customer
-
-create table dim_customer(
-customer_id int primary key,
-customer_segment varchar(100),
-loyalty_tier varchar(100)
+-- =====================================
+-- DIM_CUSTOMER
+-- =====================================
+CREATE TABLE dim_customer (
+    customer_id SERIAL PRIMARY KEY,
+    customer_segment VARCHAR(100),
+    loyalty_tier VARCHAR(100)
 );
 
-
---dim_payment
-
-create table dim_payment(
-payment_id int primary key,
-payment_method varchar(100)
+-- =====================================
+-- DIM_PAYMENT
+-- =====================================
+CREATE TABLE dim_payment (
+    payment_id SERIAL PRIMARY KEY,
+    payment_method VARCHAR(100)
 );
 
-
---dim_priority
-
-create table dim_priority (
-priority_id int primary key,
-priority varchar(100)
+-- =====================================
+-- DIM_PRIORITY
+-- =====================================
+CREATE TABLE dim_priority (
+    priority_id SERIAL PRIMARY KEY,
+    priority VARCHAR(100)
 );
 
-
---dim_channel
-
-create table dim_channel (
-channel_id int primary key,
-channel varchar(100)
+-- =====================================
+-- DIM_CHANNEL
+-- =====================================
+CREATE TABLE dim_channel (
+    channel_id SERIAL PRIMARY KEY,
+    channel VARCHAR(100)
 );
 
-
---dim_returns
-
-create table dim_returns (
-returns_id int primary key,
-returned varchar(100)
+-- =====================================
+-- DIM_RETURNS
+-- =====================================
+CREATE TABLE dim_returns (
+    returns_id SERIAL PRIMARY KEY,
+    returned VARCHAR(20)
 );
 
+-- =====================================
+-- FACT_SALES
+-- =====================================
+CREATE TABLE fact_sales (
+    fact_id SERIAL PRIMARY KEY,
 
+    date_id INT,
+    location_id INT,
+    store_id INT,
+    sales_id INT,
+    promotion_id INT,
+    product_id INT,
+    category_id INT,
+    customer_id INT,
+    payment_id INT,
+    priority_id INT,
+    channel_id INT,
+    returns_id INT,
 
+    order_id VARCHAR(50),
+
+    quantity INT,
+
+    unit_cost NUMERIC(18,2),
+    unit_price NUMERIC(18,2),
+    discount_amount NUMERIC(18,2),
+    tax_amount NUMERIC(18,2),
+    shipping_cost NUMERIC(18,2),
+    gross_sales NUMERIC(18,2),
+    net_sales NUMERIC(18,2),
+    cogs NUMERIC(18,2),
+    gross_profit NUMERIC(18,2),
+);
