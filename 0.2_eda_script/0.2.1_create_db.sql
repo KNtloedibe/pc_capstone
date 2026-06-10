@@ -1,0 +1,2 @@
+create katlego_datawarehousedb
+create katlego_stagingdb
